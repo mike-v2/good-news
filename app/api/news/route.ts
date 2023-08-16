@@ -10,39 +10,42 @@ function getCollectionName(date: Date): string {
 
 export async function GET(req: NextRequest) {
   const today = new Date();
-  let collectionName = getCollectionName(today);
-  console.log("trying to get articles for date: " + collectionName);
-  let collection = firestoreDB.collection(collectionName);
 
+  // Get most recent articles. Due to time zone differences, tomorrow may already exist
+  const tomorrow = new Date();
+  tomorrow.setDate(today.getDate() + 1);
+
+  let collectionName = getCollectionName(tomorrow);
+  console.log("trying to get collection name: " + collectionName);
+  let collection = firestoreDB.collection(collectionName);
   let snapshot = await collection.get();
+
+  if (snapshot.size === 0) {
+    console.log('cound not find collection, trying today');
+    collectionName = getCollectionName(today);
+    console.log("trying to get collection name: " + collectionName);
+    collection = firestoreDB.collection(collectionName);
+    snapshot = await collection.get();
+  }
+
   if (snapshot.size === 0) {
     console.log('cound not find collection, trying yesterday');
     const yesterday = new Date(today);
     yesterday.setDate(today.getDate() - 1);
     collectionName = getCollectionName(yesterday);
-    console.log("trying to get articles for date: " + collectionName);
+    console.log("trying to get collection name: " + collectionName);
     collection = firestoreDB.collection(collectionName);
+    snapshot = await collection.get();
   }
 
-  snapshot = await collection.get();
-  if (snapshot.size === 0) {
-    console.log('cound not find collection, trying tomorrow');
-    const tomorrow = new Date(today);
-    tomorrow.setDate(today.getDate() + 1);
-    collectionName = getCollectionName(tomorrow);
-    console.log("trying to get articles for date: " + collectionName);
-    collection = firestoreDB.collection(collectionName);
-  }
-  snapshot = await collection.get();
   if (snapshot.size === 0) {
     console.error('could not find firestore collection');
     return NextResponse.json({ message: 'could not find data' }, { status: 400 });
   }
 
-  console.log("snapshot: ", snapshot);
   let articles: Article[] = [];
   snapshot.forEach(doc => {
-    console.log(doc.id, '=>', doc.data());
+    //console.log(doc.id, '=>', doc.data());
     const data = doc.data() as Article;
     articles.push(data);
   });
