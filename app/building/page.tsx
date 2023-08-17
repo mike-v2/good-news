@@ -1,5 +1,6 @@
 'use client'
 
+import ArticleCard from "@/components/articleCard";
 import { useEffect, useState } from "react";
 
 
@@ -27,14 +28,10 @@ export default function Building() {
       <h1>
         Building, Construction, and Development
       </h1>
-      <div className=''>
+      <div className='flex flex-wrap justify-center gap-8'>
         {articles && Array.isArray(articles) && articles.map((article, index) => {
           return (
-            <div className="flex flex-col" key={index}>
-              <div>
-                {article.title}
-              </div>
-            </div>
+            <ArticleCard {...article} key={index} />
           )
         })}
       </div>

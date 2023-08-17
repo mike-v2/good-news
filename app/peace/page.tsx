@@ -1,5 +1,6 @@
 'use client'
 
+import ArticleCard from "@/components/articleCard";
 import { useEffect, useState } from "react";
 
 export default function Peace() {
@@ -30,9 +31,7 @@ export default function Peace() {
         {articles && Array.isArray(articles) && articles.map((article, index) => {
           return (
             <div className="flex flex-col" key={index}>
-              <div>
-                {article.title}
-              </div>
+              <ArticleCard {...article} />
             </div>
           )
         })}
