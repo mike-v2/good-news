@@ -1,6 +1,5 @@
-import { initializeApp, applicationDefault, cert, getApps } from 'firebase-admin/app';
-import { getFirestore, Timestamp, FieldValue, Filter } from 'firebase-admin/firestore';
-import firebase from 'firebase/compat/app';
+import { initializeApp, cert, getApps } from 'firebase-admin/app';
+import { getFirestore } from 'firebase-admin/firestore';
 
 const serviceAccount = require("../keyfile/goodnews-firebase.json");
 

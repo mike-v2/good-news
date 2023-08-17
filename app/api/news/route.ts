@@ -9,6 +9,10 @@ function getCollectionName(date: Date): string {
 }
 
 export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const category = searchParams.get('category');
+  console.log("getting articles for category: ", category);
+
   const today = new Date();
 
   // Get most recent articles. Due to time zone differences, tomorrow may already exist
@@ -47,7 +51,9 @@ export async function GET(req: NextRequest) {
   snapshot.forEach(doc => {
     //console.log(doc.id, '=>', doc.data());
     const data = doc.data() as Article;
-    articles.push(data);
+    if (data.category === category) {
+      articles.push(data);
+    }
   });
 
   return NextResponse.json({ articles }, { status: 200 });
