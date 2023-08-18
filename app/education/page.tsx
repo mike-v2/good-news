@@ -24,15 +24,13 @@ export default function Education() {
 
   return (
     <main className="">
-      <h1>
+      <h1 className="text-center text-6xl my-12">
         Expanding Education
       </h1>
-      <div className=''>
+      <div className='flex flex-wrap justify-center gap-20'>
         {articles && Array.isArray(articles) && articles.map((article, index) => {
           return (
-            <div className="flex flex-col" key={index}>
-              <ArticleCard {...article} />
-            </div>
+            <ArticleCard {...article} key={index} />
           )
         })}
       </div>
