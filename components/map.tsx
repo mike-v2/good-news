@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   ComposableMap,
   Geographies,
@@ -7,7 +7,7 @@ import {
 } from "react-simple-maps";
 import geo from '../json/geography.json'
 
-const MapChart = ({ articlesByCountry }: { articlesByCountry: CountryCountData[] }) => {
+const MapChart = ({ articlesByCountry, handleMarkerClicked }: { articlesByCountry: CountryCountData[], handleMarkerClicked: (country: CountryCountData) => void }) => {
   const renderMarker = (country: CountryCountData, i: number) => {
     if (
       Array.isArray(country.coords) &&
@@ -15,21 +15,21 @@ const MapChart = ({ articlesByCountry }: { articlesByCountry: CountryCountData[]
       typeof country.coords[0] === 'number' &&
       typeof country.coords[1] === 'number'
     ) {
+
       return (
-        <Marker key={i} coordinates={country.coords}>
+        <Marker key={i} coordinates={country.coords} onClick={e => handleMarkerClicked(country)}>
           <circle
             r={Math.sqrt(country.count) * 3}
-            fill="#FF5722"
-            stroke="#DF3702"
-            strokeWidth={0.2}
-            fillOpacity={0.4}
+            fill="#FF0000"
+            stroke="#FFFFFF"
+            strokeWidth={1}
+            fillOpacity={1}
           />
         </Marker>
       );
     }
     return null;
   };
-
 
   return (
     <ComposableMap>
