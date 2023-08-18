@@ -1,5 +1,12 @@
 import { firestoreDB } from "@/utils/firebase";
 import { NextRequest, NextResponse } from "next/server";
+const countryData = require('../../../json/country_coordinates.json')
+
+type CoordinateData = {
+  ISO: string;
+  COUNTRY: string;
+  coordinates: string;
+}
 
 function getCollectionName(date: Date): string {
   const day = date.getDate();
@@ -8,11 +15,7 @@ function getCollectionName(date: Date): string {
   return `${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}-${year}`;
 }
 
-export async function GET(req: NextRequest) {
-  const { searchParams } = new URL(req.url);
-  const category = searchParams.get('category');
-  console.log("getting articles for category: ", category);
-
+async function getSnapshot(): Promise<FirebaseFirestore.QuerySnapshot<FirebaseFirestore.DocumentData>> {
   const today = new Date();
 
   // Get most recent articles. Due to time zone differences, tomorrow may already exist
@@ -44,17 +47,54 @@ export async function GET(req: NextRequest) {
 
   if (snapshot.size === 0) {
     console.error('could not find firestore collection');
-    return NextResponse.json({ message: 'could not find data' }, { status: 400 });
   }
 
-  let articles: Article[] = [];
-  snapshot.forEach(doc => {
-    //console.log(doc.id, '=>', doc.data());
-    const data = doc.data() as Article;
-    if (data.category === category) {
-      articles.push(data);
-    }
-  });
+  return snapshot;
+}
 
-  return NextResponse.json({ articles }, { status: 200 });
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const category = searchParams.get('category');
+
+  const snapshot = await getSnapshot();
+  if (!snapshot) {
+    return NextResponse.json({ message: 'could not find data' }, { status: 400 });
+  }
+  if (!category) {
+    const articlesByCountryCount: CountryCountData[] = [];
+
+    snapshot.forEach(doc => {
+      const data = doc.data() as Article;
+      if (!data.country || data.country === '') return; // acts like 'continue' in 'forEach'
+      const country = data.country;
+
+      let entry: CountryCountData | undefined = articlesByCountryCount.find(d => d.country === country);
+      if (!entry) {
+        entry = { country: country, count: 0 }
+        const coordsEntry = countryData.find((d: CoordinateData) => d.ISO.toLowerCase() === country);
+        console.log("coordsEntry = ", coordsEntry);
+        if (coordsEntry) {
+          entry.coords = coordsEntry.coordinates;
+        }
+        articlesByCountryCount.push(entry);
+      }
+
+      entry.count++;
+    });
+
+    return NextResponse.json({ articlesByCountryCount }, { status: 200 });
+  } else {
+    console.log("getting articles for category: ", category);
+
+    let articles: Article[] = [];
+    snapshot.forEach(doc => {
+      //console.log(doc.id, '=>', doc.data());
+      const data = doc.data() as Article;
+      if (data.category === category) {
+        articles.push(data);
+      }
+    });
+
+    return NextResponse.json({ articles }, { status: 200 });
+  }
 }
