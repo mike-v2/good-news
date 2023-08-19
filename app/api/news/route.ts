@@ -2,12 +2,6 @@ import { firestoreDB } from "@/utils/firebase";
 import { NextRequest, NextResponse } from "next/server";
 const countryData = require('../../../json/country_coordinates.json')
 
-type CoordinateData = {
-  ISO: string;
-  COUNTRY: string;
-  coordinates: string;
-}
-
 function getCollectionName(date: Date): string {
   const day = date.getDate();
   const month = date.getMonth() + 1;
