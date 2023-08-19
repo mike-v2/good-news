@@ -36,6 +36,3 @@ next-env.d.ts
 
 # keyfile
 /keyfile
-
-#images
-/public/images

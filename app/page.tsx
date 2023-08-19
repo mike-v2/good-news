@@ -26,9 +26,7 @@ export default function Home() {
       }
     }
 
-    if (!articleData) {
-      fetchArticleData();
-    }
+    fetchArticleData();
   }, []);
 
   useEffect(() => {
