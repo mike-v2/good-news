@@ -26,7 +26,9 @@ export default function Home() {
       }
     }
 
-    fetchArticleData();
+    if (!articleData) {
+      fetchArticleData();
+    }
   }, []);
 
   useEffect(() => {
@@ -42,14 +44,13 @@ export default function Home() {
       }
     }
 
-    if (selectedCountry) {
+    if (selectedCountry && selectedCountry !== '') {
       fetchCountryArticleData();
     }
   }, [selectedCountry]);
 
   return (
     <main className="">
-      <h1>Home</h1>
       <div className="px-2 sm:px-12">
         {articleData && articleData.length > 0 &&
           <MapChart articlesByCountry={articleData} handleMarkerClicked={handleMarkerClicked} />

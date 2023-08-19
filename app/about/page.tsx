@@ -55,7 +55,7 @@ export default function About() {
           Join Us
         </h3>
         <p>
-          Be part of our journey to inspire and uplift. Don't forget to share the stories that move you!
+          Be part of our journey to inspire and uplift. Don&apos;t forget to share the stories that move you!
         </p>
         <p>
           Thank you for being a beacon of positivity with GoodNews!.
