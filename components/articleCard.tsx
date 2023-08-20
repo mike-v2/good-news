@@ -6,7 +6,7 @@ export default function ArticleCard(article: Article) {
   const [isHovered, setIsHovered] = useState<boolean>(false);
 
   return (
-    <a href={article.url} className="flex flex-col md:flex-row gap-4 border-2 border-black shadow-lg p-2 hover:rounded-xl hover:bg-slate-100 hover:shadow-none hover:scale-105 transition-all duration-300" onMouseEnter={e => setIsHovered(true)} onMouseLeave={e => setIsHovered(false)}>
+    <a href={article.url} className="flex flex-col md:flex-row gap-4 border-2 border-slate-400 shadow-lg p-2 hover:rounded-xl hover:bg-slate-100 hover:shadow-none hover:scale-105 transition-all duration-300" onMouseEnter={e => setIsHovered(true)} onMouseLeave={e => setIsHovered(false)} target="_blank">
       <div className="w-72">
         {article.image && article.image !== '' &&
           <div className={`flex flex-col justify-end md:justify-center h-full ${isHovered ? 'scale-105' : ''} transition-all duration-300`}>
@@ -25,7 +25,7 @@ export default function ArticleCard(article: Article) {
           <p className="text-lg font-bold">{article.source}</p>
         }
         {article.author && article.author !== '' &&
-          <p className="italic text-sm">{article.author}</p>
+          <p className="italic text-sm text-slate-500">{article.author}</p>
         }
       </div>
     </a>

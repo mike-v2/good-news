@@ -20,12 +20,13 @@ export default function Navbar() {
   }, [isOpen])
 
   return (
-    <nav className="h-28 flex justify-end pb-4 border-b">
-      <div className="block md:hidden w-20 ml-auto">
-        <details ref={detailsRef} className="dropdown dropdown-end" onClick={toggleMenu}>
-          <summary className="m-1 btn"><Image src='/images/menu_icon.svg' width={30} height={30} alt="menu icon" /></summary>
-          <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
-            <li><Link href='/about' >About</Link></li>
+    <nav className="h-28 flex pb-2 border-b">
+      <div className="w-20 mt-auto ml-4">
+        <details ref={detailsRef} className="dropdown dropdown-hover" onMouseEnter={e => setIsOpen(true)} onMouseLeave={e => setIsOpen(false)} onClick={toggleMenu}>
+          <summary className="m-1 btn bg-transparent  border-transparent hover:bg-transparent hover:border-transparent hover:underline flex flex-col justify-end capitalize font-normal text-base">
+            News
+          </summary>
+          <ul className="dropdown-content p-2 shadow menu z-[1] bg-base-100 rounded-box w-52">
             <li><Link href='/building' >Building</Link></li>
             <li><Link href='/healthcare' >Healthcare</Link></li>
             <li><Link href='/education' >Education</Link></li>
@@ -33,12 +34,11 @@ export default function Navbar() {
           </ul>
         </details>
       </div>
-      <div className="hidden md:flex justify-end gap-x-8 mt-auto mr-6">
-        <Link href='/about' >About</Link>
-        <Link href='/building' >Building</Link>
-        <Link href='/healthcare' >Healthcare</Link>
-        <Link href='/education' >Education</Link>
-        <Link href='/peace' >Peace</Link>
+      <div className="absolute top-0 w-full flex justify-center pointer-events-none">
+        <Link href='/' ><Image src='/images/good-news-logo.png' className="w-auto pointer-events-auto hover:scale-125 hover:translate-y-3 transition-all duration-700 ease-out hover:drop-shadow-lg" width={128} height={128} alt='logo' /></Link>
+      </div>
+      <div className="mt-auto ml-auto mr-6">
+        <Link href='/about'>About</Link>
       </div>
     </nav>
   )

@@ -27,7 +27,7 @@ export default function Peace() {
       <h1 className="text-center text-4xl sm:text-6xl my-12">
         Peace and Diplomacy
       </h1>
-      <div className='flex flex-wrap justify-center gap-20'>
+      <div className='flex flex-wrap justify-center gap-20 pb-20'>
         {articles && Array.isArray(articles) && articles.map((article, index) => {
           return (
             <ArticleCard {...article} key={index} />

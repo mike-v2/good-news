@@ -20,7 +20,7 @@ export default function RootLayout({
       <head>
         <link rel='icon' href='/favicon.ico' sizes="any" />
       </head>
-      <body className={`${inter.className} bg-gradient-to-br from-amber-200 via-amber-100 via-10% to-white`}>
+      <body className={`${inter.className} bg-gradient-to-br from-amber-200 via-amber-100 via-10% to-white min-h-screen`}>
         <Navbar />
         {children}
       </body>
