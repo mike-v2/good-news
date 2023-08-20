@@ -37,7 +37,7 @@ export default function Navbar() {
       <div className="absolute top-0 w-full flex justify-center pointer-events-none">
         <Link href='/' ><Image src='/images/good-news-logo.png' className="w-auto pointer-events-auto hover:scale-125 hover:translate-y-3 transition-all duration-700 ease-out hover:drop-shadow-lg" width={128} height={128} alt='logo' /></Link>
       </div>
-      <div className="mt-auto ml-auto mr-6">
+      <div className="mt-auto ml-auto mr-8 pb-1">
         <Link href='/about'>About</Link>
       </div>
     </nav>

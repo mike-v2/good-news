@@ -20,8 +20,8 @@ const MapChart = ({ articlesByCountry, handleMarkerClicked }: { articlesByCountr
         <Marker key={i} coordinates={country.coords} onClick={e => handleMarkerClicked(country)}>
           <circle
             r={Math.sqrt(country.count) * 3}
-            fill="#FF0000"
-            stroke="#FFFFFF"
+            fill="#FFFF00"
+            stroke="#000000"
             strokeWidth={1}
             fillOpacity={1}
           />
