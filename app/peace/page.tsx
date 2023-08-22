@@ -11,9 +11,16 @@ export default function Peace() {
       try {
         const response = await fetch('api/news?category=peace');
         const data = await response.json();
-        console.log('retrieved articles: ', data.articles);
+        const articles = data.articles as Article[];
+        console.log('retrieved articles: ', articles);
 
-        setArticles(data.articles);
+        articles.sort((a, b) => {
+          if (a.image && !b.image) return -1;
+          if (!a.image && b.image) return 1;
+          return 0;
+        });
+
+        setArticles(articles);
       } catch (error) {
         console.error(error);
       }
