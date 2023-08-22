@@ -27,10 +27,30 @@ export default function Navbar() {
             News
           </summary>
           <ul className="dropdown-content p-2 shadow menu z-[1] bg-base-100 rounded-box w-52">
-            <li><Link href='/building' >Building</Link></li>
-            <li><Link href='/healthcare' >Healthcare</Link></li>
-            <li><Link href='/education' >Education</Link></li>
-            <li><Link href='/peace' >Peace</Link></li>
+            <li className="flex">
+              <div>
+                <Link href='/building' className="block">Building</Link>
+                <Image src='/images/building-icon.svg' className="p-0 ml-auto" height={30} width={30} alt='building icon' />
+              </div>
+            </li>
+            <li>
+              <div>
+                <Link href='/healthcare' >Healthcare</Link>
+                <Image src='/images/healthcare-icon.svg' className="p-0 ml-auto" height={30} width={30} alt='building icon' />
+              </div>
+            </li>
+            <li>
+              <div>
+                <Link href='/education' >Education</Link>
+                <Image src='/images/education-icon.svg' className="p-0 ml-auto" height={30} width={30} alt='building icon' />
+              </div>
+            </li>
+            <li>
+              <div>
+                <Link href='/peace' >Peace</Link>
+                <Image src='/images/peace-icon.svg' className="p-0 ml-auto" height={30} width={30} alt='building icon' />
+              </div>
+            </li>
           </ul>
         </details>
       </div>
