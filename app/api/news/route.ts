@@ -16,27 +16,18 @@ async function getSnapshot(): Promise<FirebaseFirestore.QuerySnapshot<FirebaseFi
   const tomorrow = new Date();
   tomorrow.setDate(today.getDate() + 1);
 
-  let collectionName = getCollectionName(tomorrow);
-  console.log("trying to get collection name: " + collectionName);
-  let collection = firestoreDB.collection(collectionName);
-  let snapshot = await collection.get();
+  let snapshot = await getSnapshotOnDay(tomorrow);
 
   if (snapshot.size === 0) {
     console.log('cound not find collection, trying today');
-    collectionName = getCollectionName(today);
-    console.log("trying to get collection name: " + collectionName);
-    collection = firestoreDB.collection(collectionName);
-    snapshot = await collection.get();
+    snapshot = await getSnapshotOnDay(today);
   }
 
   if (snapshot.size === 0) {
     console.log('cound not find collection, trying yesterday');
     const yesterday = new Date(today);
     yesterday.setDate(today.getDate() - 1);
-    collectionName = getCollectionName(yesterday);
-    console.log("trying to get collection name: " + collectionName);
-    collection = firestoreDB.collection(collectionName);
-    snapshot = await collection.get();
+    snapshot = await getSnapshotOnDay(yesterday);
   }
 
   if (snapshot.size === 0) {
@@ -46,12 +37,35 @@ async function getSnapshot(): Promise<FirebaseFirestore.QuerySnapshot<FirebaseFi
   return snapshot;
 }
 
+async function getSnapshotOnDay(day: Date): Promise<FirebaseFirestore.QuerySnapshot<FirebaseFirestore.DocumentData>> {
+  let collectionName = getCollectionName(day);
+  let collection = firestoreDB.collection(collectionName);
+  return await collection.get();
+}
+
+async function getBackupSnapshot(): Promise<FirebaseFirestore.QuerySnapshot<FirebaseFirestore.DocumentData>> {
+  const today = new Date();
+
+  // Get most recent articles. Due to time zone differences, tomorrow may already exist
+  const tomorrow = new Date();
+  tomorrow.setDate(today.getDate() + 1);
+  let snapshot = await getSnapshotOnDay(tomorrow);
+
+  if (snapshot.size > 0) {
+    return await getSnapshotOnDay(today);
+  } else {
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+    return await getSnapshotOnDay(yesterday);
+  }
+}
+
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const category = searchParams.get('category');
   const country = searchParams.get('country');
 
-  const snapshot = await getSnapshot();
+  let snapshot = await getSnapshot();
   if (!snapshot) {
     return NextResponse.json({ message: 'could not find data' }, { status: 400 });
   }
@@ -66,6 +80,16 @@ export async function GET(req: NextRequest) {
         articles.push(data);
       }
     });
+
+    if (articles.length === 0) {
+      snapshot = await getBackupSnapshot();
+      snapshot.forEach(doc => {
+        const data = doc.data() as Article;
+        if (data.category === category) {
+          articles.push(data);
+        }
+      });
+    }
 
     return NextResponse.json({ articles }, { status: 200 });
   } else if (country) {
