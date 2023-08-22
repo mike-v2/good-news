@@ -1,6 +1,16 @@
 import Image from "next/image";
 import { useState } from "react";
+import { Open_Sans, Lora } from "next/font/google";
 
+const openSans = Open_Sans({
+  subsets: ['latin'],
+  weight: '500',
+});
+
+const lora = Lora({
+  subsets: ['latin'],
+  weight: '500',
+});
 
 export default function ArticleCard(article: Article) {
   const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -18,14 +28,14 @@ export default function ArticleCard(article: Article) {
         }
       </div>
       <div className="flex flex-col justify-center w-72">
-        <h3 className="text-3xl mb-4">
+        <h3 className={`${lora.className} text-3xl mb-4`}>
           {article.title}
         </h3>
         {article.source && article.source !== '' &&
-          <p className="text-lg font-bold">{article.source}</p>
+          <p className={`${openSans.className} text-lg font-bold`}>{article.source}</p>
         }
         {article.author && article.author !== '' &&
-          <p className="italic text-sm text-slate-500">{article.author}</p>
+          <p className={`${openSans.className} italic text-sm text-slate-500`}>{article.author}</p>
         }
       </div>
     </a>

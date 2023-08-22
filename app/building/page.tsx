@@ -25,9 +25,10 @@ export default function Building() {
 
   return (
     <main className="">
-      <h1 className="text-center text-4xl sm:text-6xl my-12">
+      <h1 className="text-center text-4xl sm:text-6xl mt-12 sm:mt-20 md:mt-32">
         Building, Construction, and Development
       </h1>
+      <div className="divider w-1/4  mx-auto before:bg-yellow-300 after:bg-yellow-300 mb-12 sm:mb-20 md:mb-32"></div> 
       <div className='flex flex-wrap justify-center gap-20 pb-20'>
         {articles && Array.isArray(articles) && articles.map((article, index) => {
           return (

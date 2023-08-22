@@ -1,9 +1,12 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Lora } from 'next/font/google'
 import Navbar from './navbar'
 
-const inter = Inter({ subsets: ['latin'] })
+const lora = Lora({
+  subsets: ['latin'],
+  weight: '500',
+});
 
 export const metadata: Metadata = {
   title: 'Good News!',
@@ -20,7 +23,7 @@ export default function RootLayout({
       <head>
         <link rel='icon' href='/favicon.ico' sizes="any" />
       </head>
-      <body className={`${inter.className} bg-gradient-to-br from-amber-200 via-amber-100 via-10% to-white min-h-screen`}>
+      <body className={`${lora.className} bg-gradient-to-br from-amber-200 via-amber-100 via-10% to-white min-h-screen`}>
         <Navbar />
         {children}
       </body>

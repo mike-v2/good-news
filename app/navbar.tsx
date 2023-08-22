@@ -20,7 +20,7 @@ export default function Navbar() {
   }, [isOpen])
 
   return (
-    <nav className="h-28 flex pb-2 border-b">
+    <nav className="h-28 flex pb-2 border-b border-yellow-200">
       <div className="w-20 mt-auto ml-4">
         <details ref={detailsRef} className="dropdown dropdown-hover" onMouseEnter={e => setIsOpen(true)} onMouseLeave={e => setIsOpen(false)} onClick={toggleMenu}>
           <summary className="m-1 btn bg-transparent  border-transparent hover:bg-transparent hover:border-transparent hover:underline flex flex-col justify-end capitalize font-normal text-base">
