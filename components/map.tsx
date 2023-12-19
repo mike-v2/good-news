@@ -28,7 +28,7 @@ const MapChart = ({ articlesByCountry, handleMarkerClicked }: { articlesByCountr
             stroke="#000000"
             strokeWidth={1}
             fillOpacity={1}
-            className="transition-all duration-700"
+            className="transition-all duration-700 cursor-pointer"
           />
         </Marker>
       );
