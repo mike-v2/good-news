@@ -3,15 +3,17 @@
 import ArticleCard from "@/components/articleCard";
 import MapChart from "@/components/map"
 import { twoLetterCountryCodeToFullName } from "@/utils/countryCodes";
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 export default function Home() {
   const [articleData, setArticleData] = useState<CountryCountData[]>([]);
   const [selectedCountry, setSelectedCountry] = useState<string>();
   const [selectedCountryArticles, setSelectedCountryArticles] = useState<Article[]>([]);
+  const selectedStoryLocationRef = useRef<HTMLDivElement>(null);
 
   function handleMarkerClicked(country: CountryCountData) {
     setSelectedCountry(country.country);
+    selectedStoryLocationRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
   useEffect(() => {
@@ -59,7 +61,7 @@ export default function Home() {
         {selectedCountry &&
           <h3 className="text-5xl text-center font-bold my-12 uppercase">{twoLetterCountryCodeToFullName(selectedCountry)}</h3>
         }
-        <div className='flex flex-wrap justify-center gap-20 pb-20'>
+        <div ref={selectedStoryLocationRef} className='flex flex-wrap justify-center gap-20 pb-20'>
           {selectedCountryArticles && selectedCountryArticles.length > 0 &&
             selectedCountryArticles.map((country, index) => {
               return (
@@ -71,7 +73,6 @@ export default function Home() {
           }
         </div>
       </div>
-
     </main>
   )
 }
