@@ -51,7 +51,7 @@ export default function Navbar() {
           </summary>
           <ul className="dropdown-content p-2 shadow menu z-[1] bg-base-100 rounded-box w-52">
             {navLinks && navLinks.map(navLink => (
-              <li>
+              <li key={navLink.name}>
                 <Link href={navLink.href} className="block">
                   <div className="flex justify-between">
                     <h6 className="flex flex-col justify-center">{navLink.name}</h6>
