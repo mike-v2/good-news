@@ -8,7 +8,7 @@ import {
 import geo from '../json/geography.json'
 
 const MapChart = ({ articlesByCountry, handleMarkerClicked }: { articlesByCountry: CountryCountData[], handleMarkerClicked: (country: CountryCountData) => void }) => {
-  const renderMarker = (country: CountryCountData, i: number) => {
+  const renderMarker = (country: CountryCountData) => {
     if (
       Array.isArray(country.coords) &&
       country.coords.length === 2 &&
@@ -17,7 +17,7 @@ const MapChart = ({ articlesByCountry, handleMarkerClicked }: { articlesByCountr
     ) {
 
       return (
-        <Marker key={i} coordinates={country.coords} onClick={e => handleMarkerClicked(country)}>
+        <Marker key={country.coords[0]} coordinates={country.coords} onClick={e => handleMarkerClicked(country)}>
           <circle
             r={Math.sqrt(country.count) * 3}
             fill="#FFFF00"
@@ -40,7 +40,7 @@ const MapChart = ({ articlesByCountry, handleMarkerClicked }: { articlesByCountr
               <Geography key={geo.rsmKey} geography={geo} />
             ))}
             {articlesByCountry.map((country, i) => (
-              renderMarker(country, i)
+              renderMarker(country)
             ))}
           </>
         )}
