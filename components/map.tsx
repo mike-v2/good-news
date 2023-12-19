@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from "react";
 import {
   ComposableMap,
@@ -8,6 +10,8 @@ import {
 import geo from '../json/geography.json'
 
 const MapChart = ({ articlesByCountry, handleMarkerClicked }: { articlesByCountry: CountryCountData[], handleMarkerClicked: (country: CountryCountData) => void }) => {
+  const [hoveredCountry, setHoveredCountry] = useState<CountryCountData | null>(null);
+
   const renderMarker = (country: CountryCountData) => {
     if (
       Array.isArray(country.coords) &&
@@ -17,13 +21,14 @@ const MapChart = ({ articlesByCountry, handleMarkerClicked }: { articlesByCountr
     ) {
 
       return (
-        <Marker key={country.coords[0]} coordinates={country.coords} onClick={e => handleMarkerClicked(country)}>
+        <Marker key={country.coords[0]} coordinates={country.coords} onClick={e => handleMarkerClicked(country)} onMouseEnter={() => setHoveredCountry(country)} onMouseLeave={() => setHoveredCountry(null)}>
           <circle
-            r={Math.sqrt(country.count) * 3}
-            fill="#FFFF00"
+            r={hoveredCountry === country ? Math.sqrt(country.count) * 4 : Math.sqrt(country.count) * 3}
+            fill={hoveredCountry === country ? "#00FF00" : "#FFFF00"}
             stroke="#000000"
             strokeWidth={1}
             fillOpacity={1}
+            className="transition-all duration-700"
           />
         </Marker>
       );
