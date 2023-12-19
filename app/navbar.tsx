@@ -51,11 +51,13 @@ export default function Navbar() {
           </summary>
           <ul className="dropdown-content p-2 shadow menu z-[1] bg-base-100 rounded-box w-52">
             {navLinks && navLinks.map(navLink => (
-              <li className="flex">
-                <div>
-                  <Link href={navLink.href}>{navLink.name}</Link>
-                  <Image src={navLink.imageSrc} className="p-0 ml-auto" height={30} width={30} alt={`${navLink.name} icon`} />
-                </div>
+              <li>
+                <Link href={navLink.href} className="block">
+                  <div className="flex justify-between">
+                    <h6 className="flex flex-col justify-center">{navLink.name}</h6>
+                    <Image src={navLink.imageSrc} className="p-0" height={30} width={30} alt={`${navLink.name} icon`} />
+                  </div>
+                </Link>
               </li>
             ))}
           </ul>
