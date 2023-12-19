@@ -4,6 +4,29 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
+const navLinks = [
+  {
+    name: 'Building',
+    href: '/building',
+    imageSrc: '/images/building-icon.svg',
+  },
+  {
+    name: 'Healthcare',
+    href: '/healthcare',
+    imageSrc: '/images/healthcare-icon.svg',
+  },
+  {
+    name: 'Education',
+    href: '/education',
+    imageSrc: '/images/education-icon.svg',
+  },
+  {
+    name: 'Peace',
+    href: '/peace',
+    imageSrc: '/images/peace-icon.svg',
+  }
+]
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const detailsRef = useRef<HTMLDetailsElement>(null);
@@ -27,30 +50,14 @@ export default function Navbar() {
             News
           </summary>
           <ul className="dropdown-content p-2 shadow menu z-[1] bg-base-100 rounded-box w-52">
-            <li className="flex">
-              <div>
-                <Link href='/building' className="block">Building</Link>
-                <Image src='/images/building-icon.svg' className="p-0 ml-auto" height={30} width={30} alt='building icon' />
-              </div>
-            </li>
-            <li>
-              <div>
-                <Link href='/healthcare' >Healthcare</Link>
-                <Image src='/images/healthcare-icon.svg' className="p-0 ml-auto" height={30} width={30} alt='building icon' />
-              </div>
-            </li>
-            <li>
-              <div>
-                <Link href='/education' >Education</Link>
-                <Image src='/images/education-icon.svg' className="p-0 ml-auto" height={30} width={30} alt='building icon' />
-              </div>
-            </li>
-            <li>
-              <div>
-                <Link href='/peace' >Peace</Link>
-                <Image src='/images/peace-icon.svg' className="p-0 ml-auto" height={30} width={30} alt='building icon' />
-              </div>
-            </li>
+            {navLinks && navLinks.map(navLink => (
+              <li className="flex">
+                <div>
+                  <Link href={navLink.href}>{navLink.name}</Link>
+                  <Image src={navLink.imageSrc} className="p-0 ml-auto" height={30} width={30} alt={`${navLink.name} icon`} />
+                </div>
+              </li>
+            ))}
           </ul>
         </details>
       </div>
