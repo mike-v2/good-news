@@ -61,7 +61,7 @@ export default function Home() {
         {selectedCountry &&
           <h3 className="text-5xl text-center font-bold my-12 uppercase">{twoLetterCountryCodeToFullName(selectedCountry)}</h3>
         }
-        <div ref={selectedStoryLocationRef} className='flex flex-wrap justify-center gap-20 pb-20'>
+        <div ref={selectedStoryLocationRef} className='flex flex-wrap justify-center gap-20 pb-20 min-h-[30rem]'>
           {selectedCountryArticles && selectedCountryArticles.length > 0 &&
             selectedCountryArticles.map((country, index) => {
               return (
