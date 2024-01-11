@@ -10,11 +10,11 @@ function getCollectionName(date: Date): string {
 }
 
 async function getSnapshot(): Promise<FirebaseFirestore.QuerySnapshot<FirebaseFirestore.DocumentData>> {
-  const today = new Date();
+  // data collection and analysis paused on Jan. 10, 2024
+  const today = new Date(2024, 0, 10);
 
   // Get most recent articles. Due to time zone differences, tomorrow may already exist
-  const tomorrow = new Date();
-  tomorrow.setDate(today.getDate() + 1);
+  const tomorrow = new Date(today.getDate() + 1);
 
   let snapshot = await getSnapshotOnDay(tomorrow);
 
